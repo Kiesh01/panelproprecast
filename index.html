@@ -16,16 +16,16 @@
   @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Archivo:wght@400;500;600&display=swap');
 
   :root{
-    --charcoal:#1E2B3A;
-    --charcoal-2:#26384A;
-    --concrete:#AEBBC7;
-    --aggregate:#E6EBF0;
-    --rust:#3E6E9E;
-    --rust-dark:#2C4F73;
-    --steel:#5B6B7A;
-    --paper:#F4F6F8;
-    --line: rgba(30,43,58,0.16);
-    --line-light: rgba(244,246,248,0.2);
+    --charcoal:#33383D;
+    --charcoal-2:#3F454B;
+    --concrete:#AEB5BB;
+    --aggregate:#ECEDEE;
+    --rust:#7FB8E0;
+    --rust-dark:#5B9BC8;
+    --steel:#666C72;
+    --paper:#F6F7F7;
+    --line: rgba(51,56,61,0.16);
+    --line-light: rgba(246,247,247,0.2);
   }
 
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -114,7 +114,7 @@
   .hero{
     background:
       repeating-linear-gradient(115deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 2px, transparent 2px, transparent 40px),
-      linear-gradient(135deg, #1E2B3A 0%, #2C4F73 48%, #5B6B7A 100%);
+      linear-gradient(135deg, #2A2E32 0%, #3F454B 50%, #666C72 100%);
     color:var(--paper);
     padding:72px 0 0 0;
     border-bottom:6px solid var(--rust);
@@ -182,21 +182,21 @@
   .quote-label{
     display:flex; flex-direction:column; justify-content:center;
     padding:20px 28px 20px 0;
-    color:#EAF1F8;
+    color:#1B2A36;
     flex:0 0 auto;
   }
   .quote-label b{
     font-family:'Oswald'; font-size:19px; text-transform:uppercase;
-    color:#FFFFFF;
+    color:#12202B;
   }
-  .quote-label span{font-size:13px; color:#D3E1EC;}
+  .quote-label span{font-size:13px; color:#2E4557;}
 
   form.quote-form{
     flex:1;
     display:flex;
     align-items:stretch;
     gap:1px;
-    background:rgba(0,0,0,0.15);
+    background:rgba(0,0,0,0.12);
     min-width:280px;
   }
   .qf-field{
@@ -208,15 +208,15 @@
   }
   .qf-field label{
     font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em;
-    color:rgba(255,255,255,0.72); font-weight:600; margin-bottom:3px;
+    color:rgba(18,32,43,0.72); font-weight:600; margin-bottom:3px;
   }
   .qf-field input, .qf-field select{
     background:transparent; border:none; outline:none;
-    color:#FFFFFF; font-weight:500; font-size:14.5px;
-    border-bottom:1px solid rgba(255,255,255,0.35);
+    color:#12202B; font-weight:500; font-size:14.5px;
+    border-bottom:1px solid rgba(18,32,43,0.35);
     padding-bottom:3px;
   }
-  .qf-field input::placeholder{color:rgba(255,255,255,0.55);}
+  .qf-field input::placeholder{color:rgba(18,32,43,0.5);}
   .qf-submit{
     flex:0 0 auto;
     background:var(--charcoal);
@@ -341,7 +341,7 @@
     border:1px solid var(--line);
     aspect-ratio:4/5;
     background:
-      linear-gradient(160deg, rgba(62,110,158,0.16), transparent 60%),
+      linear-gradient(160deg, rgba(127,184,224,0.20), transparent 60%),
       repeating-linear-gradient(100deg, #C7CDD3 0px, #C7CDD3 3px, #D9DEE3 3px, #D9DEE3 46px);
     position:relative;
   }
@@ -354,14 +354,14 @@
   /* ===== CTA band ===== */
   .cta-band{
     background:linear-gradient(120deg, var(--rust) 0%, var(--rust-dark) 100%);
-    color:#FFFFFF;
+    color:#12202B;
     text-align:left;
   }
   .cta-band .wrap{
     display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;
   }
   .cta-band h2{
-    color:#FFFFFF; text-transform:uppercase; font-size:clamp(24px,3vw,34px); max-width:16ch;
+    color:#12202B; text-transform:uppercase; font-size:clamp(24px,3vw,34px); max-width:16ch;
   }
   .cta-band a.btn{
     background:var(--charcoal); color:var(--paper);
