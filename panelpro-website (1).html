@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PanelPro — Precast Panels, Kerbs &amp; Concrete Works</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Archivo:wght@400;500;600&display=swap');
+
+  :root{
+    --charcoal:#1E2B3A;
+    --charcoal-2:#26384A;
+    --concrete:#AEBBC7;
+    --aggregate:#E6EBF0;
+    --rust:#3E6E9E;
+    --rust-dark:#2C4F73;
+    --steel:#5B6B7A;
+    --paper:#F4F6F8;
+    --line: rgba(30,43,58,0.16);
+    --line-light: rgba(244,246,248,0.2);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--charcoal);
+    font-family:'Archivo', sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    letter-spacing:0.01em;
+    line-height:1.08;
+    color:var(--charcoal);
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  ul{list-style:none;}
+  button, input, select, textarea{font-family:inherit; font-size:inherit;}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+  /* ===== Spec strip (structural device, runs across page) ===== */
+  .spec-strip{
+    background:var(--charcoal);
+    color:var(--concrete);
+    font-family:'Archivo', sans-serif;
+    font-size:12.5px;
+    letter-spacing:0.02em;
+    padding:8px 0;
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:1px solid var(--line-light);
+  }
+  .spec-strip .wrap{display:flex; gap:40px; overflow-x:auto;}
+  .spec-strip span{flex:0 0 auto;}
+  .spec-strip b{color:var(--paper); font-weight:600;}
+
+  /* ===== Header ===== */
+  header{
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:50;
+  }
+  .header-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+  }
+  .logo{
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    font-size:22px;
+    letter-spacing:0.02em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo .mark{
+    width:26px; height:26px;
+    background:var(--rust);
+    display:inline-block;
+    position:relative;
+  }
+  .logo .mark::after{
+    content:"";
+    position:absolute; top:6px; left:0; right:0; height:4px;
+    background:var(--charcoal);
+  }
+  nav{display:flex; gap:32px;}
+  nav a{
+    font-size:14.5px; font-weight:500; color:var(--steel);
+    padding:6px 0; border-bottom:2px solid transparent;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  nav a:hover{color:var(--charcoal); border-color:var(--rust);}
+  .header-cta{
+    background:var(--charcoal); color:var(--paper);
+    padding:11px 20px; font-weight:600; font-size:14px;
+    border:1px solid var(--charcoal);
+  }
+  .header-cta:hover{background:var(--rust-dark); border-color:var(--rust-dark);}
+
+  /* ===== Hero ===== */
+  .hero{
+    background:
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 2px, transparent 2px, transparent 40px),
+      linear-gradient(135deg, #1E2B3A 0%, #2C4F73 48%, #5B6B7A 100%);
+    color:var(--paper);
+    padding:72px 0 0 0;
+    border-bottom:6px solid var(--rust);
+  }
+  .hero-inner{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:48px;
+    align-items:end;
+    padding-bottom:56px;
+  }
+  .hero-eyebrow{
+    color:var(--concrete);
+    font-size:13.5px;
+    font-weight:500;
+    margin-bottom:18px;
+    max-width:34ch;
+  }
+  .hero h1{
+    font-size:clamp(40px, 5.4vw, 68px);
+    color:var(--paper);
+    text-transform:uppercase;
+    max-width:12ch;
+  }
+  .hero h1 .accent{color:var(--rust);}
+  .hero p.lede{
+    color:var(--concrete);
+    font-size:17px;
+    max-width:44ch;
+    margin-top:22px;
+  }
+  .hero-stats{
+    display:flex; gap:36px; margin-top:34px;
+  }
+  .hero-stats div{border-left:2px solid var(--rust); padding-left:12px;}
+  .hero-stats b{display:block; font-family:'Oswald'; font-size:26px; color:var(--paper);}
+  .hero-stats span{font-size:12.5px; color:var(--concrete);}
+
+  .hero-visual{
+    height:100%;
+    min-height:280px;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%),
+      repeating-linear-gradient(0deg, #6b6f68 0px, #6b6f68 2px, #7d8178 2px, #7d8178 90px),
+      repeating-linear-gradient(90deg, transparent 0 88px, rgba(0,0,0,0.12) 88px 90px);
+    position:relative;
+    border:1px solid var(--line-light);
+  }
+  .hero-visual::before{
+    content:"PRECAST PANEL — TYPE B4";
+    position:absolute; bottom:16px; left:16px;
+    font-family:'Archivo'; font-size:11px; letter-spacing:0.06em;
+    color:rgba(246,244,239,0.75);
+  }
+
+  /* ===== Quote intake bar (the memorable element) ===== */
+  .quote-bar{
+    background:var(--rust);
+    border-top:1px solid rgba(0,0,0,0.15);
+  }
+  .quote-bar .wrap{
+    display:flex; align-items:stretch; gap:0;
+    flex-wrap:wrap;
+  }
+  .quote-label{
+    display:flex; flex-direction:column; justify-content:center;
+    padding:20px 28px 20px 0;
+    color:#EAF1F8;
+    flex:0 0 auto;
+  }
+  .quote-label b{
+    font-family:'Oswald'; font-size:19px; text-transform:uppercase;
+    color:#FFFFFF;
+  }
+  .quote-label span{font-size:13px; color:#D3E1EC;}
+
+  form.quote-form{
+    flex:1;
+    display:flex;
+    align-items:stretch;
+    gap:1px;
+    background:rgba(0,0,0,0.15);
+    min-width:280px;
+  }
+  .qf-field{
+    background:var(--rust);
+    flex:1;
+    min-width:130px;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:12px 16px;
+  }
+  .qf-field label{
+    font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em;
+    color:rgba(255,255,255,0.72); font-weight:600; margin-bottom:3px;
+  }
+  .qf-field input, .qf-field select{
+    background:transparent; border:none; outline:none;
+    color:#FFFFFF; font-weight:500; font-size:14.5px;
+    border-bottom:1px solid rgba(255,255,255,0.35);
+    padding-bottom:3px;
+  }
+  .qf-field input::placeholder{color:rgba(255,255,255,0.55);}
+  .qf-submit{
+    flex:0 0 auto;
+    background:var(--charcoal);
+    color:var(--paper);
+    border:none;
+    padding:0 30px;
+    font-weight:600; font-size:14.5px;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .15s ease;
+  }
+  .qf-submit:hover{background:#0f1110;}
+
+  .quote-confirm{
+    display:none;
+    background:var(--charcoal); color:var(--paper);
+    padding:16px 32px; font-size:14.5px;
+  }
+  .quote-confirm b{color:var(--rust);}
+
+  /* ===== Section shell ===== */
+  section{padding:88px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-bottom:44px; gap:24px; flex-wrap:wrap;
+    border-bottom:1px solid var(--line);
+    padding-bottom:22px;
+  }
+  .section-head h2{
+    font-size:clamp(28px,3.4vw,40px);
+    text-transform:uppercase;
+    max-width:16ch;
+  }
+  .section-head p{
+    max-width:38ch; color:var(--steel); font-size:15px;
+  }
+  .section-no{
+    font-family:'Oswald'; font-size:13px; color:var(--rust); font-weight:600;
+    letter-spacing:0.04em; margin-bottom:8px; display:block;
+  }
+
+  /* ===== Services ===== */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+  }
+  .service-card{
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:30px 26px;
+    background:var(--paper);
+    transition:background .15s ease;
+  }
+  .service-card:hover{background:var(--aggregate);}
+  .service-card .num{
+    font-family:'Oswald'; font-size:13px; color:var(--rust); font-weight:600;
+  }
+  .service-card h3{
+    font-size:20px; margin:14px 0 10px 0; text-transform:uppercase;
+  }
+  .service-card p{color:var(--steel); font-size:14.5px;}
+
+  /* ===== Process ===== */
+  .process{
+    background:var(--charcoal); color:var(--paper);
+  }
+  .process .section-head{border-color:var(--line-light);}
+  .process .section-head p{color:var(--concrete);}
+  .process-list{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    counter-reset:step;
+  }
+  .process-step{
+    border-left:1px solid var(--line-light);
+    padding:0 22px 0 22px;
+  }
+  .process-step:first-child{border-left:none; padding-left:0;}
+  .process-step .step-num{
+    font-family:'Oswald'; font-size:34px; color:var(--rust);
+    margin-bottom:14px;
+  }
+  .process-step h4{color:var(--paper); font-size:17px; text-transform:uppercase; margin-bottom:8px;}
+  .process-step p{color:var(--concrete); font-size:14px;}
+
+  /* ===== Projects ===== */
+  .projects-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr;
+    grid-template-rows:auto auto;
+    gap:2px;
+  }
+  .project-tile{
+    position:relative;
+    min-height:260px;
+    background:
+      linear-gradient(0deg, rgba(31,34,32,0.82), rgba(31,34,32,0.15) 55%),
+      repeating-linear-gradient(0deg, #8b877d 0px, #8b877d 2px, #9a968b 2px, #9a968b 60px);
+    display:flex; align-items:flex-end; padding:20px;
+  }
+  .project-tile.tall{grid-row:span 2; min-height:100%;}
+  .project-tile .tile-text b{
+    display:block; color:var(--paper); font-family:'Oswald'; font-size:18px; text-transform:uppercase;
+  }
+  .project-tile .tile-text span{color:var(--aggregate); font-size:13px;}
+
+  /* ===== About / trust ===== */
+  .about{
+    display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;
+  }
+  .about-copy p{color:var(--steel); margin-bottom:16px; max-width:52ch;}
+  .about-copy p:first-of-type{font-size:18px; color:var(--charcoal);}
+  .cert-list{
+    display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:26px;
+  }
+  .cert-list li{
+    border:1px solid var(--line); padding:14px 16px; font-size:13.5px; color:var(--steel);
+  }
+  .cert-list b{display:block; color:var(--charcoal); font-family:'Oswald'; font-size:15px;}
+  .about-visual{
+    border:1px solid var(--line);
+    aspect-ratio:4/5;
+    background:
+      linear-gradient(160deg, rgba(62,110,158,0.16), transparent 60%),
+      repeating-linear-gradient(100deg, #C7CDD3 0px, #C7CDD3 3px, #D9DEE3 3px, #D9DEE3 46px);
+    position:relative;
+  }
+  .about-visual::after{
+    content:"MIX DESIGN — C32/40";
+    position:absolute; top:16px; right:16px;
+    font-size:11px; letter-spacing:0.05em; color:var(--steel);
+  }
+
+  /* ===== CTA band ===== */
+  .cta-band{
+    background:linear-gradient(120deg, var(--rust) 0%, var(--rust-dark) 100%);
+    color:#FFFFFF;
+    text-align:left;
+  }
+  .cta-band .wrap{
+    display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;
+  }
+  .cta-band h2{
+    color:#FFFFFF; text-transform:uppercase; font-size:clamp(24px,3vw,34px); max-width:16ch;
+  }
+  .cta-band a.btn{
+    background:var(--charcoal); color:var(--paper);
+    padding:16px 32px; font-weight:600; white-space:nowrap;
+  }
+  .cta-band a.btn:hover{background:#0f1110;}
+
+  /* ===== Footer ===== */
+  footer{background:var(--charcoal); color:var(--concrete); padding:56px 0 28px 0;}
+  .footer-grid{
+    display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px;
+    padding-bottom:36px; border-bottom:1px solid var(--line-light);
+  }
+  .footer-grid h5{
+    color:var(--paper); font-family:'Oswald'; font-size:14px; text-transform:uppercase;
+    margin-bottom:14px; letter-spacing:0.04em;
+  }
+  .footer-grid p, .footer-grid a{font-size:14px; color:var(--concrete); line-height:1.9;}
+  .footer-grid a:hover{color:var(--paper);}
+  .footer-bottom{
+    display:flex; justify-content:space-between; padding-top:20px; font-size:12.5px; color:var(--steel);
+    flex-wrap:wrap; gap:10px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width:920px){
+    nav{display:none;}
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-visual{min-height:200px;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .process-list{grid-template-columns:repeat(2,1fr); row-gap:36px;}
+    .process-step{border-left:none; padding-left:0;}
+    .process-step:nth-child(even){padding-left:22px; border-left:1px solid var(--line-light);}
+    .projects-grid{grid-template-columns:1fr 1fr;}
+    .project-tile.tall{grid-row:auto; min-height:260px;}
+    .about{grid-template-columns:1fr;}
+    form.quote-form{flex-direction:column;}
+    .qf-field{border-bottom:1px solid rgba(0,0,0,0.1);}
+  }
+  @media (max-width:600px){
+    .header-row{padding:14px 20px;}
+    .wrap{padding:0 20px;}
+    .services-grid{grid-template-columns:1fr;}
+    .process-list{grid-template-columns:1fr;}
+    .process-step:nth-child(even){padding-left:0; border-left:none;}
+    .projects-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .quote-label{padding:20px 0;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="spec-strip">
+    <div class="wrap">
+      <span>SERVING NAIROBI &amp; SURROUNDING COUNTIES</span>
+      <span>PRECAST PANELS <b>·</b> KERBS (KABROS) <b>·</b> IN-SITU CONCRETE <b>·</b> FOUNDATIONS</span>
+      <span>CURE-TESTED TO <b>C32/40</b></span>
+      <span>SITE DELIVERY WITHIN <b>48 HRS</b></span>
+    </div>
+  </div>
+
+  <header>
+    <div class="header-row wrap" style="padding-left:0; padding-right:0;">
+      <div class="logo"><span class="mark"></span>PanelPro</div>
+      <nav>
+        <a href="#services">Products</a>
+        <a href="#process">Process</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#quote" class="header-cta">Request a Quote</a>
+    </div>
+  </header>
+
+  <section class="hero" id="quote">
+    <div class="wrap hero-inner">
+      <div>
+        <div class="hero-eyebrow">Precast &amp; in-situ concrete contractor</div>
+        <h1>Concrete work built to <span class="accent">outlast</span> the job it's for</h1>
+        <p class="lede">PanelPro casts precast wall panels, road kerbs (kabros), pavers and foundations for contractors and developers who can't afford a redo. Local batching, on-site delivery, and a crew that shows up when it says it will.</p>
+        <div class="hero-stats">
+          <div><b>14</b><span>Years pouring &amp; casting</span></div>
+          <div><b>60,000m²</b><span>Panels &amp; kerbing laid</span></div>
+          <div><b>48hr</b><span>Standard site delivery</span></div>
+        </div>
+      </div>
+      <div class="hero-visual"></div>
+    </div>
+
+    <div class="quote-bar">
+      <div class="wrap">
+        <div class="quote-label">
+          <b>Request a Quote</b>
+          <span>Tell us the job — we'll call back same working day.</span>
+        </div>
+        <form class="quote-form" id="quoteForm" action="https://formspree.io/f/mwlkonwo" method="POST">
+          <div class="qf-field">
+            <label for="qName">Name</label>
+            <input type="text" id="qName" name="Name" placeholder="Your name" required>
+          </div>
+          <div class="qf-field">
+            <label for="qPhone">Phone</label>
+            <input type="tel" id="qPhone" name="Phone" placeholder="07xx xxx xxx" required>
+          </div>
+          <div class="qf-field">
+            <label for="qWork">Work needed</label>
+            <select id="qWork" name="Work needed" required>
+              <option value="" disabled selected>Select</option>
+              <option>Precast wall panels</option>
+              <option>Kerbs / kabros</option>
+              <option>Pavers &amp; walkways</option>
+              <option>Foundations</option>
+              <option>In-situ concrete</option>
+              <option>Other / not sure</option>
+            </select>
+          </div>
+          <div class="qf-field">
+            <label for="qLoc">Site location</label>
+            <input type="text" id="qLoc" name="Site location" placeholder="e.g. Ruiru" required>
+          </div>
+          <button type="submit" class="qf-submit">Get Quote</button>
+        </form>
+      </div>
+      <div class="quote-confirm" id="quoteConfirm">
+        <b>Request received.</b> A PanelPro estimator will call you within one working day to confirm site measurements and pricing.
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="section-no">What we cast</span>
+          <h2>Four products, one batching yard</h2>
+        </div>
+        <p>Everything is cast and cured on our own yard, so mix quality and delivery timing stay in our hands from pour to placement.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="num">01</div>
+          <h3>Precast Panels</h3>
+          <p>Boundary walls, partition panels and cladding cast to size, reinforced and ready to install — no waiting on site curing.</p>
+        </div>
+        <div class="service-card">
+          <div class="num">02</div>
+          <h3>Kerbs &amp; Kabros</h3>
+          <p>Road kerbs and interlocking kabros for driveways, estates and access roads, cast in standard or custom profiles.</p>
+        </div>
+        <div class="service-card">
+          <div class="num">03</div>
+          <h3>Pavers &amp; Walkways</h3>
+          <p>Interlocking pavers for compounds, parking bays and footpaths, laid on properly compacted base for a surface that won't shift.</p>
+        </div>
+        <div class="service-card">
+          <div class="num">04</div>
+          <h3>Foundations &amp; In-Situ</h3>
+          <p>Footings, slabs and in-situ pours for new builds, batched to spec and placed by our own crew, not subcontracted out.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="section-no">How a job runs</span>
+          <h2>From site visit to placement</h2>
+        </div>
+        <p>Four stages, same crew throughout — no handoffs between quoting and casting.</p>
+      </div>
+      <div class="process-list">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <h4>Site Survey</h4>
+          <p>An estimator visits, takes measurements and checks ground conditions before quoting.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <h4>Mix &amp; Cast</h4>
+          <p>Panels and units are batched and cast at our yard to the agreed spec and cure schedule.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <h4>Delivery</h4>
+          <p>Cured units are trucked to site and staged for placement within the agreed window.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <h4>Install &amp; Sign-off</h4>
+          <p>Our crew places and finishes the work, then walks the site with you before sign-off.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="section-no">Recent work</span>
+          <h2>On site around Nairobi</h2>
+        </div>
+        <p>A sample of panel, kerb and paving jobs completed in the last two seasons.</p>
+      </div>
+      <div class="projects-grid">
+        <div class="project-tile tall">
+          <div class="tile-text"><b>Ruiru Estate Boundary Wall</b><span>420m precast panel run · 6 weeks</span></div>
+        </div>
+        <div class="project-tile">
+          <div class="tile-text"><b>Kiambu Road Kerbing</b><span>1.1km kabros, both carriageways</span></div>
+        </div>
+        <div class="project-tile">
+          <div class="tile-text"><b>Athi River Warehouse Slab</b><span>2,400m² foundation pour</span></div>
+        </div>
+        <div class="project-tile">
+          <div class="tile-text"><b>Karen Compound Paving</b><span>Driveway &amp; parking, interlocking pavers</span></div>
+        </div>
+        <div class="project-tile">
+          <div class="tile-text"><b>Thika Access Road</b><span>Kerbing &amp; drainage channel, 800m</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div class="about-copy">
+        <p>PanelPro started as a two-man casting yard in 2012 and now runs a full batching plant, delivery fleet and install crew.</p>
+        <p>We work directly with contractors and developers — no subcontracting out the casting or the placement, which is how we keep mix quality and delivery dates in our own hands.</p>
+        <ul class="cert-list">
+          <li><b>KEBS Certified</b>Mix designs tested to national standard</li>
+          <li><b>Own Fleet</b>No third-party delivery delays</li>
+          <li><b>Site-Cast Option</b>In-situ pours for large slabs</li>
+          <li><b>1-Year Defects Cover</b>On all placed work</li>
+        </ul>
+      </div>
+      <div class="about-visual"></div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>Have a site that needs pricing?</h2>
+      <a href="#quote" class="btn">Request a Quote</a>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h5>PanelPro</h5>
+          <p>Precast panels, kerbs, pavers &amp; concrete works.<br>Batching yard &amp; head office:<br>Off Kangundo Road, Nairobi</p>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <p><a href="tel:+254700000000">+254 700 000 000</a><br>
+          <a href="mailto:info@panelpro.co.ke">info@panelpro.co.ke</a><br>
+          Mon–Sat, 7am–6pm</p>
+        </div>
+        <div>
+          <h5>Products</h5>
+          <p><a href="#services">Precast panels</a><br>
+          <a href="#services">Kerbs / kabros</a><br>
+          <a href="#services">Pavers</a><br>
+          <a href="#services">Foundations</a></p>
+        </div>
+        <div>
+          <h5>Company</h5>
+          <p><a href="#process">Process</a><br>
+          <a href="#projects">Projects</a><br>
+          <a href="#about">About</a><br>
+          <a href="#quote">Get a quote</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 PanelPro. All rights reserved.</span>
+        <span>Batching yard open for site visits by appointment.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const quoteForm = document.getElementById('quoteForm');
+    const quoteConfirm = document.getElementById('quoteConfirm');
+
+    quoteForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const submitBtn = quoteForm.querySelector('.qf-submit');
+      const originalLabel = submitBtn.textContent;
+      submitBtn.textContent = 'Sending...';
+      submitBtn.disabled = true;
+
+      fetch(quoteForm.action, {
+        method: 'POST',
+        body: new FormData(quoteForm),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(response => {
+        if(response.ok){
+          quoteForm.style.display = 'none';
+          document.querySelector('.quote-label').style.display = 'none';
+          quoteConfirm.style.display = 'block';
+        } else {
+          submitBtn.textContent = originalLabel;
+          submitBtn.disabled = false;
+          alert('Something went wrong sending your request. Please call us directly or try again.');
+        }
+      })
+      .catch(() => {
+        submitBtn.textContent = originalLabel;
+        submitBtn.disabled = false;
+        alert('Something went wrong sending your request. Please call us directly or try again.');
+      });
+    });
+  </script>
+
+</body>
+</html>
