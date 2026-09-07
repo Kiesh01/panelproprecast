@@ -1,0 +1,6 @@
+{
+  "name": "PanelPro Precast Ltd",
+  "description": "Leading precast concrete manufacturer along Kenyatta Road, Kiambu. Supplying KEBS-certified Cabro paving blocks, concrete kerbs, road channels, culverts, and fence posts across Nairobi and Kenya.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
