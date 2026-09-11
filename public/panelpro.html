@@ -1164,12 +1164,38 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                const resData = await response.json();
-                if (resData && resData.reference) {
-                    refCode = resData.reference;
+                if (response.ok) {
+                    const resData = await response.json();
+                    if (resData && resData.reference) {
+                        refCode = resData.reference;
+                    }
+                } else {
+                    // Fallback to send_quote.php
+                    try {
+                        const phpRes = await fetch('/send_quote.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (phpRes.ok) {
+                            const phpData = await phpRes.json();
+                            if (phpData && phpData.reference) refCode = phpData.reference;
+                        }
+                    } catch (_) {}
                 }
             } catch (err) {
-                console.warn('Network inquiry recorded with local ref:', err);
+                console.warn('Network inquiry recorded with local ref, trying fallback:', err);
+                try {
+                    const phpRes = await fetch('/send_quote.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (phpRes.ok) {
+                        const phpData = await phpRes.json();
+                        if (phpData && phpData.reference) refCode = phpData.reference;
+                    }
+                } catch (_) {}
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalHtml;
