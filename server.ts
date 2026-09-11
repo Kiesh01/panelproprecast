@@ -11,8 +11,10 @@ const PORT = 3000;
 
 app.use(express.json());
 
-// Target recipient and default credentials
-const TARGET_EMAIL = process.env.TARGET_EMAIL || "kierugitau0@gmail.com";
+// Target recipients and credentials
+const TARGET_EMAILS = process.env.TARGET_EMAIL
+  ? [process.env.TARGET_EMAIL]
+  : ["kierugitau0@gmail.com", "info@panelproprecast.co.ke"];
 const EMAIL_USER = process.env.EMAIL_USER || "kierugitau0@gmail.com";
 // Remove any accidental spaces in app password
 const EMAIL_PASS = (process.env.EMAIL_PASS || "nagr rcoq zjsm ikcv").replace(/\s+/g, "");
@@ -185,7 +187,7 @@ PanelPro Precast and Logistics Ltd
     const transporter = getMailer();
     await transporter.sendMail({
       from: `"PanelPro Precast Website" <${EMAIL_USER}>`,
-      to: TARGET_EMAIL,
+      to: TARGET_EMAILS,
       replyTo: email || undefined,
       subject: emailSubject,
       text: emailText,
