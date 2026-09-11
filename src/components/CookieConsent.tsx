@@ -102,7 +102,7 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ onOpenLegal }) => 
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <h3 className="text-sm font-bold tracking-tight text-white">
-                    We Value Your Privacy &amp; Comply with Google AdSense Policies
+                    We Value Your Privacy
                   </h3>
                   <span className="hidden sm:inline-flex items-center gap-1 text-[10px] bg-blue-900/60 text-blue-300 font-semibold px-2 py-0.5 rounded border border-blue-700/50">
                     <ShieldCheck className="w-3 h-3" /> GDPR / Kenya DPA
