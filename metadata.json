@@ -1,6 +1,0 @@
-{
-  "name": "PanelPro Precast Ltd",
-  "description": "Leading precast concrete manufacturer along Kenyatta Road, Kiambu. Supplying precast hollow pots, hollow blocks, flat & T-beams, louvents, balustrades, highway manhole covers, dobbie sinks, Cabro paving blocks, kerbs, culverts, and fence posts across Nairobi and Kenya.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
