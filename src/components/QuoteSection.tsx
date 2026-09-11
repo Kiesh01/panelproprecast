@@ -36,18 +36,47 @@ export const QuoteSection: React.FC<QuoteSectionProps> = ({ selectedProduct, onP
     if (!formData.fullname || !formData.phone) return;
 
     setIsSubmitting(true);
+    let resolvedRef = `PR-${Math.floor(100000 + Math.random() * 900000)}`;
+
     try {
       const res = await fetch('/api/quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
-      setQuoteReference(data.reference || `PR-${Math.floor(100000 + Math.random() * 900000)}`);
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.reference) resolvedRef = data.reference;
+      } else {
+        // Fallback to PHP backend if /api/quote is 404 (e.g., standard Apache/cPanel hosting)
+        try {
+          const phpRes = await fetch('/send_quote.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+          });
+          if (phpRes.ok) {
+            const phpData = await phpRes.json();
+            if (phpData?.reference) resolvedRef = phpData.reference;
+          }
+        } catch (_) {}
+      }
     } catch (err) {
-      console.warn('Network submit fallback:', err);
-      setQuoteReference(`PR-${Math.floor(100000 + Math.random() * 900000)}`);
+      console.warn('Primary endpoint unavailable, attempting fallback:', err);
+      try {
+        const phpRes = await fetch('/send_quote.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+        if (phpRes.ok) {
+          const phpData = await phpRes.json();
+          if (phpData?.reference) resolvedRef = phpData.reference;
+        }
+      } catch (_) {}
     } finally {
+      setQuoteReference(resolvedRef);
       setIsSubmitting(false);
       setSubmitted(true);
     }
