@@ -845,6 +845,9 @@
                 </div>
 
                 <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                    <a id="whatsapp-quote-btn" href="https://wa.me/254791064684" target="_blank" rel="noopener noreferrer" style="background: #16a34a; color: #fff; text-decoration: none; padding: 10px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fa-brands fa-whatsapp"></i> Send via WhatsApp
+                    </a>
                     <a href="tel:0791064684" style="background: #2563eb; color: #fff; text-decoration: none; padding: 10px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
                         <i class="fa-solid fa-phone"></i> Call Sales Desk
                     </a>
@@ -1176,6 +1179,12 @@
                 document.getElementById('success-ref').textContent = refCode;
                 document.getElementById('success-user-msg').textContent = 
                     'Thank you, ' + payload.fullname + '. Your quotation details for ' + payload.product + ' have been sent to our sales desk.';
+                
+                const waSummary = 'Hello PanelPro Precast, I have submitted an inquiry:\nRef: ' + refCode + '\nName: ' + payload.fullname + '\nPhone: ' + payload.phone + '\nProduct: ' + payload.product + '\nQuantity: ' + (payload.quantity || 'N/A') + '\nLocation: ' + (payload.location || 'N/A');
+                const waBtn = document.getElementById('whatsapp-quote-btn');
+                if (waBtn) {
+                    waBtn.href = 'https://wa.me/254791064684?text=' + encodeURIComponent(waSummary);
+                }
             }
         }
 
