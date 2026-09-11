@@ -91,7 +91,7 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li className="pt-2 border-t border-slate-800/80">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
-                  Legal &amp; AdSense Compliance
+                  Legal &amp; Privacy
                 </span>
                 <div className="space-y-1 text-xs">
                   <button
@@ -99,7 +99,7 @@ export const Footer: React.FC<FooterProps> = ({
                     className="hover:text-blue-300 text-slate-400 flex items-center gap-1.5 transition-colors cursor-pointer text-left"
                   >
                     <Lock className="w-3 h-3 text-blue-400" />
-                    <span>Privacy Policy (Google AdSense)</span>
+                    <span>Privacy Policy</span>
                   </button>
                   <button
                     onClick={() => handleOpenDoc('terms')}
@@ -203,11 +203,11 @@ export const Footer: React.FC<FooterProps> = ({
                 <span className="font-semibold text-slate-200 block">&ldquo;Exit 14 Kenyatta Road&rdquo;</span>
                 <span>Juja, Kiambu County, Kenya</span>
                 <a
-                  href="https://www.google.com/maps/dir/?api=1&destination=-1.083257,36.978548"
+                  href="https://maps.app.goo.gl/m3zMWXJTzwgic9Z7A"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-400 hover:text-blue-300 font-semibold inline-flex items-center gap-1 mt-1 block"
-                  title="Open driving directions to our yard on Google Maps"
+                  title="Open driving directions to PanelPro Precast and Logistics Ltd on Google Maps"
                 >
                   <span>Google Maps Directions</span>
                   <ExternalLink className="w-3 h-3" />
