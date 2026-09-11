@@ -2,9 +2,9 @@ import React from 'react';
 import { MapPin, CheckCircle2, Navigation, ExternalLink, Compass } from 'lucide-react';
 
 export const WhyUs: React.FC = () => {
-  const directionsUrl = 'https://www.google.com/maps/dir/?api=1&destination=-1.083257,36.978548';
-  const pinLocationUrl = 'https://www.google.com/maps?q=-1.083257,36.978548+(PanelPro+Precast+Ltd+-+Exit+14+Kenyatta+Road)';
-  const googleMapsShortUrl = 'https://maps.app.goo.gl/CMMrbTn4ufjdQSvV7';
+  const directionsUrl = 'https://www.google.com/maps/dir/?api=1&destination=-1.0832131,36.9786477';
+  const pinLocationUrl = 'https://maps.app.goo.gl/m3zMWXJTzwgic9Z7A';
+  const googleMapsShortUrl = 'https://maps.app.goo.gl/m3zMWXJTzwgic9Z7A';
 
   return (
     <section id="advantage" className="py-20 bg-slate-100 border-b border-slate-200">
@@ -134,14 +134,14 @@ export const WhyUs: React.FC = () => {
             {/* Embedded Google Map */}
             <div className="lg:col-span-2 relative min-h-[340px] bg-slate-200">
               <iframe
-                title="PanelPro Precast Ltd Location - Exit 14 Kenyatta Road Juja"
-                src="https://maps.google.com/maps?q=-1.083257,36.978548&hl=en&z=15&output=embed"
+                title="PanelPro Precast and Logistics Ltd Location - Exit 14 Kenyatta Road Juja"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1994.5527751456252!2d36.97859091534164!3d-1.0830344164353!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f49006ec4de77%3A0x8056778a6aa6c01b!2sPanelPro%20Precast%20and%20Logistics%20Ltd!5e0!3m2!1sen!2sus!4v1789133805603!5m2!1sen!2sus"
                 width="100%"
                 height="100%"
                 className="w-full h-full min-h-[340px] border-0"
                 loading="lazy"
                 allowFullScreen
-                referrerPolicy="no-referrer-when-downgrade"
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
 
