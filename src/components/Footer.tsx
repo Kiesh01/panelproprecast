@@ -1,0 +1,279 @@
+import React from 'react';
+import { MapPin, Phone, Mail, Clock, ShieldCheck, ArrowUp, ExternalLink, Cookie, Lock, FileText } from 'lucide-react';
+import { Logo } from './Logo';
+import { LegalDocType } from './LegalModal';
+
+interface FooterProps {
+  onScrollTo: (id: string) => void;
+  onOpenHtmlModal?: () => void;
+  onOpenLegal?: (doc: LegalDocType) => void;
+  onOpenCookieSettings?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({
+  onScrollTo,
+  onOpenLegal,
+  onOpenCookieSettings,
+}) => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenDoc = (doc: LegalDocType) => {
+    if (onOpenLegal) {
+      onOpenLegal(doc);
+    }
+  };
+
+  const handleOpenCookiePreferences = () => {
+    if (onOpenCookieSettings) {
+      onOpenCookieSettings();
+    } else {
+      window.dispatchEvent(new CustomEvent('open-panelpro-cookie-settings'));
+    }
+  };
+
+  return (
+    <footer className="bg-slate-950 text-slate-400 border-t border-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Col 1: About */}
+          <div className="space-y-4">
+            <div className="cursor-pointer" onClick={scrollToTop}>
+              <Logo variant="dark" size="md" />
+            </div>
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              Your trusted precast concrete manufacturing partner at <strong>&ldquo;Exit 14 Kenyatta Road&rdquo; Juja, Kiambu County</strong>. Supplying KEBS-certified cabro blocks, hollow pots, beams, road channels, kerbs, culverts, and fence posts for infrastructure and residential construction.
+            </p>
+            <div className="pt-2 flex items-center gap-2 text-xs text-blue-400 font-semibold">
+              <ShieldCheck className="w-4 h-4" />
+              <span>KEBS Certified &bull; KeNHA Approved Specs</span>
+            </div>
+          </div>
+
+          {/* Col 2: Quick Links */}
+          <div>
+            <h4 className="text-white text-sm font-bold uppercase tracking-wider mb-4 border-l-2 border-blue-500 pl-2.5">
+              Quick Navigation
+            </h4>
+            <ul className="space-y-2 text-xs sm:text-sm">
+              <li>
+                <button
+                  onClick={() => onScrollTo('home')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  Home &amp; Overview
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onScrollTo('products')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  Product Portfolio (14 Products)
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onScrollTo('advantage')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  Why Us (&ldquo;Exit 14 Kenyatta Road&rdquo; Yard)
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onScrollTo('quote')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  Request a Custom Quote
+                </button>
+              </li>
+              <li className="pt-2 border-t border-slate-800/80">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
+                  Legal &amp; AdSense Compliance
+                </span>
+                <div className="space-y-1 text-xs">
+                  <button
+                    onClick={() => handleOpenDoc('privacy')}
+                    className="hover:text-blue-300 text-slate-400 flex items-center gap-1.5 transition-colors cursor-pointer text-left"
+                  >
+                    <Lock className="w-3 h-3 text-blue-400" />
+                    <span>Privacy Policy (Google AdSense)</span>
+                  </button>
+                  <button
+                    onClick={() => handleOpenDoc('terms')}
+                    className="hover:text-blue-300 text-slate-400 flex items-center gap-1.5 transition-colors cursor-pointer text-left"
+                  >
+                    <FileText className="w-3 h-3 text-blue-400" />
+                    <span>Terms &amp; Conditions</span>
+                  </button>
+                  <button
+                    onClick={() => handleOpenDoc('cookies')}
+                    className="hover:text-blue-300 text-slate-400 flex items-center gap-1.5 transition-colors cursor-pointer text-left"
+                  >
+                    <Cookie className="w-3 h-3 text-blue-400" />
+                    <span>Cookie Policy</span>
+                  </button>
+                  <button
+                    onClick={handleOpenCookiePreferences}
+                    className="hover:text-blue-300 text-blue-400 flex items-center gap-1.5 transition-colors cursor-pointer text-left font-medium"
+                  >
+                    <Cookie className="w-3 h-3 text-blue-400" />
+                    <span>Manage Cookie Settings</span>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 3: Products Catalog */}
+          <div>
+            <h4 className="text-white text-sm font-bold uppercase tracking-wider mb-4 border-l-2 border-blue-500 pl-2.5">
+              Precast Products
+            </h4>
+            <ul className="space-y-2 text-xs sm:text-sm text-slate-400">
+              <li>
+                <button
+                  onClick={() => onScrollTo('products')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  &bull; Cabro Paving Blocks (50 / 60 / 80mm)
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onScrollTo('products')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  &bull; Concrete Kerbs (Bullnose &amp; Chamfered)
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onScrollTo('products')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  &bull; Precast Road Channels
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onScrollTo('products')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  &bull; Precast Drainage Culverts
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onScrollTo('products')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  &bull; Reinforced Fence Posts
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onScrollTo('products')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  &bull; Shallow Drains &amp; Dish Channels
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onScrollTo('products')}
+                  className="hover:text-blue-400 transition-colors cursor-pointer text-left"
+                >
+                  &bull; Precast Paving Slabs
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: Contact */}
+          <div className="space-y-3">
+            <h4 className="text-white text-sm font-bold uppercase tracking-wider mb-4 border-l-2 border-blue-500 pl-2.5">
+              Contact &amp; Location
+            </h4>
+            <div className="text-xs text-slate-400 flex items-start gap-2.5">
+              <MapPin className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-semibold text-slate-200 block">&ldquo;Exit 14 Kenyatta Road&rdquo;</span>
+                <span>Juja, Kiambu County, Kenya</span>
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=-1.083257,36.978548"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 font-semibold inline-flex items-center gap-1 mt-1 block"
+                  title="Open driving directions to our yard on Google Maps"
+                >
+                  <span>Google Maps Directions</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 flex items-center gap-2.5">
+              <Phone className="w-4 h-4 text-blue-400 shrink-0" />
+              <a href="tel:0791064684" className="hover:text-blue-300 transition-colors font-medium">
+                0791064684 <span className="text-slate-500 font-normal">(+254 791 064 684)</span>
+              </a>
+            </p>
+            <p className="text-xs text-slate-400 flex items-center gap-2.5">
+              <Mail className="w-4 h-4 text-blue-400 shrink-0" />
+              <span>info@panelproprecast.co.ke</span>
+            </p>
+            <p className="text-xs text-slate-400 flex items-center gap-2.5 pt-1">
+              <Clock className="w-4 h-4 text-blue-400 shrink-0" />
+              <span>Mon - Sat: 7:30 AM – 5:30 PM</span>
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-6 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1.5 text-center md:text-left">
+            <span>&copy; 2026 PanelPro Precast Ltd. All Rights Reserved.</span>
+            <span className="text-slate-700 hidden sm:inline">&bull;</span>
+            <button
+              onClick={() => handleOpenDoc('privacy')}
+              className="text-slate-400 hover:text-blue-400 underline transition-colors cursor-pointer"
+            >
+              Privacy Policy
+            </button>
+            <span className="text-slate-700 hidden sm:inline">&bull;</span>
+            <button
+              onClick={() => handleOpenDoc('terms')}
+              className="text-slate-400 hover:text-blue-400 underline transition-colors cursor-pointer"
+            >
+              Terms of Service
+            </button>
+            <span className="text-slate-700 hidden sm:inline">&bull;</span>
+            <button
+              onClick={() => handleOpenDoc('cookies')}
+              className="text-slate-400 hover:text-blue-400 underline transition-colors cursor-pointer"
+            >
+              Cookie Policy
+            </button>
+            <span className="text-slate-700 hidden sm:inline">&bull;</span>
+            <button
+              onClick={handleOpenCookiePreferences}
+              className="text-blue-400 hover:text-blue-300 font-medium inline-flex items-center gap-1 transition-colors cursor-pointer"
+            >
+              <Cookie className="w-3 h-3 text-blue-400" />
+              <span>Cookie Settings</span>
+            </button>
+          </div>
+          <button
+            onClick={scrollToTop}
+            className="flex items-center gap-1.5 text-slate-400 hover:text-blue-400 transition-colors cursor-pointer shrink-0"
+          >
+            <span>Back to top</span>
+            <ArrowUp className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+    </footer>
+  );
+};
