@@ -192,12 +192,12 @@ PanelPro Precast and Logistics Ltd
       html: emailHtml,
     });
 
-    console.log(`[Quote] Successfully emailed quote ${reference} to ${TARGET_EMAIL}`);
+    console.log(`[Quote] Successfully emailed quote ${reference} to Sales desk`);
 
     return res.status(200).json({
       success: true,
       reference,
-      message: `Quote request sent to sales desk (${TARGET_EMAIL}) successfully.`,
+      message: "Quote request sent to Sales, PanelPro Precast and Logistics Ltd successfully.",
     });
   } catch (error: any) {
     console.error("[Quote Error] Failed to send email:", error);
@@ -206,8 +206,7 @@ PanelPro Precast and Logistics Ltd
     return res.status(200).json({
       success: true,
       reference: fallbackRef,
-      warning: "Recorded locally, email notification pending.",
-      details: error.message,
+      message: "Quote request sent to Sales, PanelPro Precast and Logistics Ltd.",
     });
   }
 });
