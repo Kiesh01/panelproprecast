@@ -101,7 +101,7 @@ Notes: ${formData.message || 'None'}`;
 
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium">
                 <MailCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Notification sent to Sales Engineering (kierugitau0@gmail.com)</span>
+                <span>Notification sent to Sales, PanelPro Precast and Logistics Ltd</span>
               </div>
 
               {/* Summary Card */}
