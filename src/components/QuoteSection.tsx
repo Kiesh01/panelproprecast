@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, Copy, Check, Calculator, PhoneCall, Loader2, MailCheck } from 'lucide-react';
+import { Send, CheckCircle2, Copy, Check, Calculator, PhoneCall, Loader2, MailCheck, MessageSquare } from 'lucide-react';
 import { QuoteFormState } from '../types';
 
 interface QuoteSectionProps {
@@ -116,6 +116,17 @@ Notes: ${formData.message || 'None'}`;
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <a
+                  href={`https://wa.me/254791064684?text=${encodeURIComponent(
+                    `Hello PanelPro Precast, I have submitted an inquiry:\nRef: ${quoteReference}\nName: ${formData.fullname}\nPhone: ${formData.phone}\nProduct: ${formData.product}\nQuantity: ${formData.quantity || 'N/A'}\nLocation: ${formData.location || 'N/A'}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-md flex items-center gap-1.5 transition-colors"
+                >
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  <span>Send via WhatsApp (+254 791 064 684)</span>
+                </a>
                 <button
                   onClick={handleCopySummary}
                   className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-md border border-slate-300 flex items-center gap-1.5 cursor-pointer"
