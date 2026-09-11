@@ -109,7 +109,7 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ onOpenLegal }) => 
                   </span>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  PanelPro Precast Ltd and trusted third-party partners (including <strong>Google AdSense</strong>) use cookies, web beacons, and unique identifiers to ensure safe operation, measure website traffic, and serve tailored advertisements. You can accept all cookies, decline non-essential cookies, or customize your preferences at any time.
+                  PanelPro Precast Ltd and trusted third-party partners (including <strong>Google</strong>) use cookies, web beacons, and unique identifiers to ensure safe operation, measure website traffic, and serve tailored advertisements. You can accept all cookies, decline non-essential cookies, or customize your preferences at any time.
                 </p>
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400 pt-0.5">
                   <button
