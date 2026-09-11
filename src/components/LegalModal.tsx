@@ -61,7 +61,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             }`}
           >
             <Lock className="w-4 h-4" />
-            <span>Privacy Policy (AdSense Compliant)</span>
+            <span>Privacy Policy</span>
           </button>
           <button
             onClick={() => onSelectDoc('terms')}
