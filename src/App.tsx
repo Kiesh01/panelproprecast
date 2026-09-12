@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TrustBar } from './components/TrustBar';
 import { ProductCatalog } from './components/ProductCatalog';
+import { AdBanner } from './components/AdBanner';
 import { WhyUs } from './components/WhyUs';
 import { QuoteSection } from './components/QuoteSection';
 import { Footer } from './components/Footer';
@@ -50,6 +51,9 @@ export default function App() {
 
       {/* Product Catalog Grid (featuring all uploaded images with blue & grey styling) */}
       <ProductCatalog onSelectForQuote={handleSelectForQuote} />
+
+      {/* Google AdSense Responsive Ad Unit (High Viewability Transition Spot) */}
+      <AdBanner slot="2553207762" />
 
       {/* Why Us / Kenyatta Road Advantage Section */}
       <WhyUs />
