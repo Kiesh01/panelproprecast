@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TrustBar } from './components/TrustBar';
@@ -9,11 +9,45 @@ import { QuoteSection } from './components/QuoteSection';
 import { Footer } from './components/Footer';
 import { LegalModal, LegalDocType } from './components/LegalModal';
 import { CookieConsent } from './components/CookieConsent';
+import { AdcashReportingModal } from './components/AdcashReportingModal';
 
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<string>('Cabro Paving Blocks');
   const [isLegalModalOpen, setIsLegalModalOpen] = useState<boolean>(false);
   const [activeLegalDoc, setActiveLegalDoc] = useState<LegalDocType>('privacy');
+  const [isAdcashReportingOpen, setIsAdcashReportingOpen] = useState<boolean>(false);
+
+  // Private shortcut / URL hash listener so only you can access the dashboard
+  useEffect(() => {
+    // Check if URL ends with #adcash-stats or ?admin=adcash
+    if (
+      window.location.hash === '#adcash-stats' ||
+      window.location.search.includes('admin=adcash')
+    ) {
+      setIsAdcashReportingOpen(true);
+    }
+
+    const handleHashChange = () => {
+      if (window.location.hash === '#adcash-stats') {
+        setIsAdcashReportingOpen(true);
+      }
+    };
+
+    // Secret shortcut: Press Ctrl + Shift + A (or Cmd + Shift + A on Mac)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        setIsAdcashReportingOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const handleScrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -69,6 +103,12 @@ export default function App() {
         onScrollTo={handleScrollTo}
         onOpenLegal={handleOpenLegal}
         onOpenCookieSettings={handleOpenCookiePreferences}
+      />
+
+      {/* Adcash Publisher Reporting Analytics Tool */}
+      <AdcashReportingModal
+        isOpen={isAdcashReportingOpen}
+        onClose={() => setIsAdcashReportingOpen(false)}
       />
 
       {/* Google AdSense Compliant Legal Modal (Privacy, Terms, Cookies) */}
