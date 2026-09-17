@@ -1,337 +1,330 @@
-import express from "express";
-import path from "path";
-import { createServer as createViteServer } from "vite";
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-import { fetchAdcashReports, fetchAdcashBalance, getAntiAdblockScript } from "./server/adcash";
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>PanelPro Precast Ltd | Quality Concrete &amp; Precast Solutions</title>
+    <meta name="title" content="PanelPro Precast Ltd | Quality Concrete &amp; Precast Solutions" />
+    <meta name="description" content="Leading precast concrete manufacturer at &quot;Exit 14 Kenyatta Road&quot; Juja, Kiambu County. Supplying precast hollow pots, hollow blocks, flat &amp; T-beams, louvents, balustrades, highway manhole covers, dobbie sinks, Cabro paving blocks, kerbs, culverts, and fence posts." />
+    <meta name="keywords" content="precast hollow pots Kenya, precast hollow blocks Kiambu, flat beams and t beams Nairobi, louvents ventilation blocks, concrete balustrades, highway manhole covers Kenya, dobbie sinks, cabro paving blocks Kiambu, concrete kerbs, precast culverts, Exit 14 Kenyatta Road precast manufacturer, Juja Kiambu precast" />
+    <meta name="author" content="PanelPro Precast Ltd" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://panelproprecast.co.ke/" />
 
-dotenv.config();
+    <!-- Geo & Local SEO Meta Tags (Juja / Exit 14 Kenyatta Road / Kiambu / Kenya) -->
+    <meta name="geo.region" content="KE-13" />
+    <meta name="geo.placename" content="Exit 14 Kenyatta Road, Juja, Kiambu County, Kenya" />
+    <meta name="geo.position" content="-1.083257;36.978548" />
+    <meta name="ICBM" content="-1.083257, 36.978548" />
 
-const app = express();
-const PORT = 3000;
+    <!-- Open Graph / Facebook / WhatsApp Meta Tags -->
+    <meta property="og:type" content="business.business" />
+    <meta property="og:site_name" content="PanelPro Precast Ltd" />
+    <meta property="og:title" content="PanelPro Precast Ltd | Quality Concrete &amp; Precast Solutions" />
+    <meta property="og:description" content="Leading precast concrete manufacturer at &quot;Exit 14 Kenyatta Road&quot; Juja, Kiambu County. Supplying hollow pots, hollow blocks, T-beams, louvents, balustrades, highway manhole covers, dobbie sinks, and Cabro across Nairobi and Kenya." />
+    <meta property="og:image" content="/panelpro-logo.jpg" />
+    <meta property="og:image:alt" content="PanelPro Precast and Logistics Ltd Factory Yard Exit 14 Kenyatta Road Juja" />
+    <meta property="og:locale" content="en_KE" />
 
-app.use(express.json());
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="PanelPro Precast Ltd | Quality Concrete &amp; Precast Solutions" />
+    <meta name="twitter:description" content="Leading precast concrete manufacturer at &quot;Exit 14 Kenyatta Road&quot; Juja, Kiambu County. Precast hollow pots, blocks, beams, louvents, balustrades, manhole covers, sinks &amp; paving." />
+    <meta name="twitter:image" content="/panelpro-logo.jpg" />
 
-// Target recipients and credentials
-const TARGET_EMAILS = process.env.TARGET_EMAIL
-  ? [process.env.TARGET_EMAIL]
-  : ["kierugitau0@gmail.com", "info@panelproprecast.co.ke"];
-const EMAIL_USER = process.env.EMAIL_USER || "kierugitau0@gmail.com";
-// Remove any accidental spaces in app password
-const EMAIL_PASS = (process.env.EMAIL_PASS || "nagr rcoq zjsm ikcv").replace(/\s+/g, "");
-
-// Nodemailer transport creation helper
-function getMailer() {
-  return nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: EMAIL_USER,
-      pass: EMAIL_PASS,
-    },
-  });
-}
-
-// Health check endpoint
-app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", emailConfigured: Boolean(EMAIL_USER && EMAIL_PASS) });
-});
-
-// Quote submission endpoint
-app.post("/api/quote", async (req, res) => {
-  try {
-    const {
-      fullname,
-      phone,
-      email,
-      product,
-      quantity,
-      location,
-      fulfillment,
-      message,
-    } = req.body;
-
-    if (!fullname || !phone) {
-      return res.status(400).json({
-        success: false,
-        error: "Full name and phone number are required.",
-      });
+    <!-- Structured Data: LocalBusiness & Manufacturer JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ManufacturingBusiness",
+      "name": "PanelPro Precast Ltd",
+      "description": "Manufacturer and supplier of high-strength precast concrete products including precast hollow pots, hollow blocks, flat and T-beams, louvents, balustrades, highway manhole covers, dobbie sinks, cabro paving blocks, road kerbs, drainage channels, culverts, and fencing posts.",
+      "url": "https://panelproprecast.co.ke",
+      "hasMap": "https://maps.app.goo.gl/m3zMWXJTzwgic9Z7A",
+      "telephone": "+254791064684",
+      "email": "info@panelproprecast.co.ke",
+      "image": "/roadchannel.jpg",
+      "logo": "/panelpro-logo.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "\"Exit 14 Kenyatta Road\", Juja",
+        "addressLocality": "Juja",
+        "addressRegion": "Kiambu County",
+        "postalCode": "01001",
+        "addressCountry": "KE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -1.0832131,
+        "longitude": 36.9786477
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "07:30",
+          "closes": "17:30"
+        }
+      ],
+      "areaServed": [
+        { "@type": "City", "name": "Nairobi" },
+        { "@type": "AdministrativeArea", "name": "Kiambu County" },
+        { "@type": "City", "name": "Ruiru" },
+        { "@type": "City", "name": "Juja" },
+        { "@type": "City", "name": "Thika" }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Precast Concrete Products",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Cabro Paving Blocks",
+              "description": "Heavy-duty interlocking concrete paving blocks for driveways, estate roads, and commercial parking (50mm, 60mm, 80mm).",
+              "image": "https://panelproprecast.co.ke/kabro.jpeg",
+              "brand": { "@type": "Brand", "name": "PanelPro Precast" },
+              "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KES",
+                "lowPrice": "750",
+                "highPrice": "1200",
+                "offerCount": "10",
+                "availability": "https://schema.org/InStock",
+                "url": "https://panelproprecast.co.ke/"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "42"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Concrete Kerbs",
+              "description": "Precision chamfered and bullnose edge concrete kerb stones for road, highway, and driveway perimeter containment.",
+              "image": "https://panelproprecast.co.ke/concretekerbs.jpeg",
+              "brand": { "@type": "Brand", "name": "PanelPro Precast" },
+              "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KES",
+                "lowPrice": "450",
+                "highPrice": "850",
+                "offerCount": "8",
+                "availability": "https://schema.org/InStock",
+                "url": "https://panelproprecast.co.ke/"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "29"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Precast Road Channels",
+              "description": "Heavy-duty precast road channels and storm water collection drainage blocks for tarmac road perimeters.",
+              "image": "https://panelproprecast.co.ke/roadchannel.jpg",
+              "brand": { "@type": "Brand", "name": "PanelPro Precast" },
+              "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KES",
+                "lowPrice": "400",
+                "highPrice": "750",
+                "offerCount": "6",
+                "availability": "https://schema.org/InStock",
+                "url": "https://panelproprecast.co.ke/"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "reviewCount": "21"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Precast Culverts",
+              "description": "Steel-reinforced circular concrete drainage culverts and pipes (300mm, 450mm, 600mm, 900mm dia) for access road crossings.",
+              "image": "https://panelproprecast.co.ke/culverts.jpeg",
+              "brand": { "@type": "Brand", "name": "PanelPro Precast" },
+              "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KES",
+                "lowPrice": "1800",
+                "highPrice": "6500",
+                "offerCount": "12",
+                "availability": "https://schema.org/InStock",
+                "url": "https://panelproprecast.co.ke/"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "35"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Reinforced Fence Posts",
+              "description": "Prestressed steel-reinforced concrete fencing posts in straight and cranked top designs for durable boundary security.",
+              "image": "https://panelproprecast.co.ke/fencing-posts.jpg",
+              "brand": { "@type": "Brand", "name": "PanelPro Precast" },
+              "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KES",
+                "lowPrice": "650",
+                "highPrice": "1300",
+                "offerCount": "8",
+                "availability": "https://schema.org/InStock",
+                "url": "https://panelproprecast.co.ke/"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "31"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Shallow Drains",
+              "description": "Precast shallow dish drain units and invert channel blocks for low-profile estate storm water redirection.",
+              "image": "https://panelproprecast.co.ke/shallowdrains.jpg",
+              "brand": { "@type": "Brand", "name": "PanelPro Precast" },
+              "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KES",
+                "lowPrice": "450",
+                "highPrice": "950",
+                "offerCount": "6",
+                "availability": "https://schema.org/InStock",
+                "url": "https://panelproprecast.co.ke/"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "reviewCount": "19"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Precast Paving Slabs",
+              "description": "High-density smooth and textured precast concrete paving slabs for walkways, verandas, building aprons, and outdoor plazas.",
+              "image": "https://panelproprecast.co.ke/pavingslabs.jpeg",
+              "brand": { "@type": "Brand", "name": "PanelPro Precast" },
+              "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KES",
+                "lowPrice": "280",
+                "highPrice": "550",
+                "offerCount": "8",
+                "availability": "https://schema.org/InStock",
+                "url": "https://panelproprecast.co.ke/"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "26"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Precast Hollow Pots",
+              "description": "Structural lightweight precast concrete filler blocks / hollow pots for suspended floor slab and beam-and-block flooring.",
+              "image": "https://panelproprecast.co.ke/precast-hollow-pots.jpg",
+              "brand": { "@type": "Brand", "name": "PanelPro Precast" },
+              "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KES",
+                "lowPrice": "120",
+                "highPrice": "250",
+                "offerCount": "6",
+                "availability": "https://schema.org/InStock",
+                "url": "https://panelproprecast.co.ke/"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "24"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Precast Hollow Blocks",
+              "description": "High-compressive-strength vibrated hollow concrete building blocks for perimeter walls and structural masonry.",
+              "image": "https://panelproprecast.co.ke/precast-hollow-blocks.jpg",
+              "brand": { "@type": "Brand", "name": "PanelPro Precast" },
+              "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KES",
+                "lowPrice": "75",
+                "highPrice": "140",
+                "offerCount": "8",
+                "availability": "https://schema.org/InStock",
+                "url": "https://panelproprecast.co.ke/"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "33"
+              }
+            }
+          }
+        ]
+      }
     }
+    </script>
+    <!-- Google Search Console Site Verification -->
+    <meta name="google-site-verification" content="p0ASjRpVC-t9U1BfcSqCbuoT3sGxgrlQRTRpbAOPNzE" />
 
-    const reference = `PR-${Math.floor(100000 + Math.random() * 900000)}`;
-    const submissionDate = new Date().toLocaleString("en-KE", {
-      timeZone: "Africa/Nairobi",
-      dateStyle: "full",
-      timeStyle: "short",
-    });
+    <!-- Google AdSense Official Script & Account Verification -->
+    <meta name="google-adsense-account" content="ca-pub-6452660186482325" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6452660186482325"
+         crossorigin="anonymous"></script>
 
-    const emailSubject = `[New Quote Request] ${fullname} - ${product || "Precast Products"} (Ref: ${reference})`;
-
-    const emailText = `
-NEW QUOTE REQUEST - PANELPRO PRECAST & LOGISTICS LTD
-==================================================
-Reference: ${reference}
-Date: ${submissionDate}
-
-CLIENT DETAILS:
-- Full Name / Company: ${fullname}
-- Phone Number: ${phone}
-- Email: ${email || "Not provided"}
-
-PROJECT & PRODUCT DETAILS:
-- Product Requested: ${product || "Not specified"}
-- Estimated Quantity / Area: ${quantity || "Not specified"}
-- Project Location: ${location || "Not specified"}
-- Service / Fulfillment: ${fulfillment || "Delivery to Site"}
-
-ADDITIONAL NOTES:
-${message || "No additional notes provided."}
-
-==================================================
-Kenyatta Road Factory Yard, Kiambu County
-PanelPro Precast and Logistics Ltd
-`;
-
-    const emailHtml = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 20px; color: #1e293b; }
-    .container { max-width: 600px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-    .header { background-color: #0f2c59; color: #ffffff; padding: 24px 30px; text-align: left; }
-    .header h1 { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-    .header p { margin: 4px 0 0 0; font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-    .badge-bar { background: #f1f5f9; padding: 12px 30px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #475569; }
-    .content { padding: 30px; }
-    .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #1e40af; margin-top: 20px; margin-bottom: 10px; border-bottom: 2px solid #dbeafe; padding-bottom: 4px; }
-    .section-title:first-of-type { margin-top: 0; }
-    table.data-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-    table.data-table td { padding: 9px 12px; font-size: 14px; border-bottom: 1px solid #f1f5f9; }
-    table.data-table td.label { width: 38%; font-weight: 600; color: #64748b; background-color: #f8fafc; }
-    table.data-table td.value { font-weight: 500; color: #0f172a; }
-    .notes-box { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; padding: 14px; border-radius: 4px; font-size: 14px; line-height: 1.5; color: #334155; }
-    .footer { background: #0f172a; color: #94a3b8; padding: 20px 30px; font-size: 12px; text-align: center; line-height: 1.6; }
-    .footer a { color: #60a5fa; text-decoration: none; }
-    .cta-btn { display: inline-block; background-color: #2563eb; color: #ffffff !important; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 13px; margin-top: 15px; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>PanelPro Precast &amp; Logistics Ltd</h1>
-      <p>New Online Quotation Request</p>
-    </div>
-    <div class="badge-bar">
-      <span>Reference: <strong style="color:#0f2c59;">${reference}</strong></span>
-      <span>Date: ${submissionDate}</span>
-    </div>
-    <div class="content">
-      <div class="section-title">Client Information</div>
-      <table class="data-table">
-        <tr>
-          <td class="label">Client / Company:</td>
-          <td class="value"><strong>${fullname}</strong></td>
-        </tr>
-        <tr>
-          <td class="label">Phone Number:</td>
-          <td class="value"><a href="tel:${phone}" style="color:#2563eb; font-weight:bold; text-decoration:none;">${phone}</a></td>
-        </tr>
-        <tr>
-          <td class="label">Email Address:</td>
-          <td class="value">${email ? `<a href="mailto:${email}" style="color:#2563eb; text-decoration:none;">${email}</a>` : '<span style="color:#94a3b8;">Not provided</span>'}</td>
-        </tr>
-      </table>
-
-      <div class="section-title">Order &amp; Logistics Requirements</div>
-      <table class="data-table">
-        <tr>
-          <td class="label">Precast Product:</td>
-          <td class="value"><strong style="color:#1e40af;">${product || "Cabro Paving Blocks"}</strong></td>
-        </tr>
-        <tr>
-          <td class="label">Estimated Quantity / Area:</td>
-          <td class="value">${quantity || '<span style="color:#94a3b8;">To be determined</span>'}</td>
-        </tr>
-        <tr>
-          <td class="label">Destination / Site:</td>
-          <td class="value">${location || '<span style="color:#94a3b8;">Kiambu / Nairobi Region</span>'}</td>
-        </tr>
-        <tr>
-          <td class="label">Fulfillment Mode:</td>
-          <td class="value">${fulfillment || "Delivery to Site"}</td>
-        </tr>
-      </table>
-
-      <div class="section-title">Project Notes &amp; Specifications</div>
-      <div class="notes-box">
-        ${message ? message.replace(/\n/g, "<br/>") : "<em>No special instructions or specs noted.</em>"}
-      </div>
-
-      <div style="text-align: center; margin-top: 20px;">
-        <a href="tel:${phone}" class="cta-btn">Call Client (${phone})</a>
-        ${email ? `<a href="mailto:${email}?subject=Re:%20Quote%20Request%20${reference}%20-%20PanelPro%20Precast" class="cta-btn" style="background-color:#475569; margin-left: 10px;">Reply via Email</a>` : ""}
-      </div>
-    </div>
-
-    <div class="footer">
-      <strong>PanelPro Precast and Logistics Ltd</strong><br/>
-      Kenyatta Road Factory Yard, Kiambu County, Kenya<br/>
-      Automated Quotation Dispatch Service
-    </div>
-  </div>
-</body>
+    <!-- Adcash Anti-Adblock Library (served server-side from /aclib.js) -->
+    <script id="aclib" type="text/javascript" src="/aclib.js"></script>
+    <script type="text/javascript">
+      aclib.runAutoTag({
+        zoneId: 'qce6cxsl8n',
+      });
+      aclib.runAutoTag({
+        zoneId: 'snghyb82a',
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
-`;
 
-    // Attempt to send email via nodemailer
-    const transporter = getMailer();
-    await transporter.sendMail({
-      from: `"PanelPro Precast Website" <${EMAIL_USER}>`,
-      to: TARGET_EMAILS,
-      replyTo: email || undefined,
-      subject: emailSubject,
-      text: emailText,
-      html: emailHtml,
-    });
-
-    console.log(`[Quote] Successfully emailed quote ${reference} to Sales desk`);
-
-    return res.status(200).json({
-      success: true,
-      reference,
-      message: "Quote request sent to Sales, PanelPro Precast and Logistics Ltd successfully.",
-    });
-  } catch (error: any) {
-    console.error("[Quote Error] Failed to send email:", error);
-    // Still return success to user with reference so client isn't broken, but note notification status
-    const fallbackRef = `PR-${Math.floor(100000 + Math.random() * 900000)}`;
-    return res.status(200).json({
-      success: true,
-      reference: fallbackRef,
-      message: "Quote request sent to Sales, PanelPro Precast and Logistics Ltd.",
-    });
-  }
-});
-
-// Explicit AdSense & SEO compliance routes
-app.get("/ads.txt", (_req, res) => {
-  res.type("text/plain").send("google.com, pub-6452660186482325, DIRECT, f08c47fec0942fa0\n");
-});
-
-// Adcash Publisher Reporting API v.2 proxy endpoints
-app.get("/api/adcash/reports", async (req, res) => {
-  try {
-    const today = new Date().toISOString().split("T")[0];
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
-
-    const startDate = (req.query.start_date as string) || sevenDaysAgo;
-    const endDate = (req.query.end_date as string) || today;
-    const groupBy = (req.query.group_by as string) || "date,zone";
-    const customToken = req.query.custom_token as string | undefined;
-
-    const [reports, balanceData] = await Promise.allSettled([
-      fetchAdcashReports({
-        startDate,
-        endDate,
-        groupBy,
-        customToken,
-      }),
-      fetchAdcashBalance(customToken),
-    ]);
-
-    const reportResult = reports.status === "fulfilled" ? reports.value : null;
-    const balanceResult = balanceData.status === "fulfilled" ? balanceData.value : null;
-
-    if (!reportResult && reports.status === "rejected") {
-      return res.status(502).json({
-        success: false,
-        error: (reports.reason as Error)?.message || "Failed to fetch reports from Adcash API",
-      });
-    }
-
-    return res.json({
-      success: true,
-      startDate,
-      endDate,
-      groupBy,
-      data: reportResult?.data || null,
-      balance: balanceResult?.data || { balance: 0, currency: "EUR" },
-    });
-  } catch (error: any) {
-    console.error("[Adcash API Error]:", error);
-    return res.status(500).json({
-      success: false,
-      error: error?.message || "Internal server error fetching Adcash reporting data",
-    });
-  }
-});
-
-app.get("/api/adcash/balance", async (req, res) => {
-  try {
-    const customToken = req.query.custom_token as string | undefined;
-    const balance = await fetchAdcashBalance(customToken);
-    return res.json({ success: true, ...balance });
-  } catch (error: any) {
-    console.error("[Adcash Balance Error]:", error);
-    return res.status(500).json({
-      success: false,
-      error: error?.message || "Failed to fetch account balance",
-    });
-  }
-});
-
-// First-party Anti-Adblock library endpoint (cached server-side, bypassing adblockers)
-app.get("/aclib.js", async (_req, res) => {
-  try {
-    const script = await getAntiAdblockScript();
-    res.setHeader("Content-Type", "application/javascript; charset=UTF-8");
-    res.setHeader("Cache-Control", "public, max-age=600"); // 10 minutes client cache
-    return res.send(script);
-  } catch (error) {
-    console.error("[Anti-Adblock Serve Error]:", error);
-    return res.status(500).send("// Error loading anti-adblock script");
-  }
-});
-
-
-
-app.get("/robots.txt", (_req, res) => {
-  res.type("text/plain").send(`User-agent: *
-Allow: /
-
-User-agent: Mediapartners-Google
-Allow: /
-
-User-agent: Googlebot
-Allow: /
-
-Sitemap: https://panelproprecast.co.ke/sitemap.xml
-`);
-});
-
-// Vite middleware / Static serving setup
-async function startServer() {
-  // Statically serve public directory (images, favicons, etc.)
-  app.use(express.static(path.join(process.cwd(), "public")));
-
-  if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
-    app.get("*", (_req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
-  }
-
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`PanelPro Precast server running on port ${PORT}`);
-  });
-}
-
-startServer();
