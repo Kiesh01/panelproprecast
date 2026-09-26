@@ -218,6 +218,11 @@ app.get("/ads.txt", (_req, res) => {
   res.type("text/plain").send("google.com, pub-6452660186482325, DIRECT, f08c47fec0942fa0\n");
 });
 
+// app-ads.txt must return 404 text for web-only publishers to prevent SPA HTML fallback
+app.get("/app-ads.txt", (_req, res) => {
+  res.status(404).type("text/plain").send("User-agent: *\nDisallow: /\n");
+});
+
 app.get("/robots.txt", (_req, res) => {
   res.type("text/plain").send(`User-agent: *
 Allow: /
@@ -230,6 +235,10 @@ Allow: /
 
 Sitemap: https://panelproprecast.co.ke/sitemap.xml
 `);
+});
+
+app.get("/sitemap.xml", (_req, res) => {
+  res.type("application/xml").sendFile(path.join(process.cwd(), "public", "sitemap.xml"));
 });
 
 // Vite middleware / Static serving setup
