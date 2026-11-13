@@ -1,0 +1,6 @@
+{
+  "name": "CastOps - Production & Defect Monitoring System",
+  "description": "Industrial production monitoring and real-time visualization dashboard tracking slabs, road channels, moulds produced, and hourly defect rates with daily logging, monthly analytics, and yearly efficiency insights.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
